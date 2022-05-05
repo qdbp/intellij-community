@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.*
 import com.intellij.psi.util.PsiTypesUtil
 import org.jetbrains.kotlin.analysis.api.KtAnalysisSession
+import org.jetbrains.kotlin.analysis.api.standalone.StandaloneModePsiDeclarationProvider
 import org.jetbrains.kotlin.analysis.api.symbols.*
 import org.jetbrains.kotlin.analysis.api.types.KtClassErrorType
 import org.jetbrains.kotlin.analysis.api.types.KtNonErrorClassType
@@ -146,7 +147,7 @@ internal fun KtAnalysisSession.nullability(ktType: KtType?): TypeNullability? {
 internal fun KtSymbol.psiForUast(project: Project): PsiElement? {
     return when (origin) {
         KtSymbolOrigin.LIBRARY -> {
-            FirPsiDeclarationProvider.findPsi(this, project) ?: psi
+            StandaloneModePsiDeclarationProvider.findPsi(this, project) ?: psi
         }
         else -> psi
     }
